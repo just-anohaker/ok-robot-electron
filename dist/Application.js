@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const okrobot_1 = require("okrobot");
 const user_1 = __importDefault(require("./proxies/user"));
 class Application {
-    getInstance() {
+    static getInstance() {
         if (Application._instance === undefined) {
             Application._instance = new Application();
         }

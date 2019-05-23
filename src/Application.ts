@@ -7,7 +7,7 @@ import ElectronUserProxy from "./proxies/user";
 class Application {
     private static _instance?: Application;
 
-    getInstance(): Application {
+    static getInstance(): Application {
         if (Application._instance === undefined) {
             Application._instance = new Application();
         }

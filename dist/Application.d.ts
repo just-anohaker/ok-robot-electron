@@ -1,6 +1,6 @@
 declare class Application {
     private static _instance?;
-    getInstance(): Application;
+    static getInstance(): Application;
     private _electronProxies;
     private constructor();
     private initializeOkRobot;
