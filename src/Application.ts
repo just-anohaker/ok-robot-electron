@@ -1,7 +1,6 @@
-import { Facade, UserProxy, UserMediator } from "okrobot";
-
+import { Facade, UserProxy, UserMediator, Platform } from "okrobot";
+import ElectronPlatform from "./base/Platform";
 import IElectronProxy from "./interfaces/electron-channel-proxy"
-
 import ElectronUserProxy from "./proxies/user";
 
 class Application {
@@ -25,6 +24,8 @@ class Application {
     }
 
     private initializeOkRobot(): void {
+        Platform.getInstance().setPlatform(new ElectronPlatform());
+
         const facadeInst = Facade.getInstance();
 
         const userProxy = new UserProxy();

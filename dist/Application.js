@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const okrobot_1 = require("okrobot");
+const Platform_1 = __importDefault(require("./base/Platform"));
 const user_1 = __importDefault(require("./proxies/user"));
 class Application {
     static getInstance() {
@@ -18,6 +19,7 @@ class Application {
         this.initializeElectron();
     }
     initializeOkRobot() {
+        okrobot_1.Platform.getInstance().setPlatform(new Platform_1.default());
         const facadeInst = okrobot_1.Facade.getInstance();
         const userProxy = new okrobot_1.UserProxy();
         facadeInst.registerProxy(userProxy);
