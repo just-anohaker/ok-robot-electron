@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const okrobot_1 = require("okrobot");
 const Platform_1 = __importDefault(require("./base/Platform"));
 const user_1 = __importDefault(require("./proxies/user"));
+const EventBus_1 = __importDefault(require("./base/EventBus"));
 class Application {
     static getInstance() {
         if (Application._instance === undefined) {
@@ -17,6 +18,9 @@ class Application {
         this._electronProxies = [];
         this.initializeOkRobot();
         this.initializeElectron();
+    }
+    changeWebContents(newWebContents) {
+        EventBus_1.default.getInstance().eventEmitter = newWebContents;
     }
     initializeOkRobot() {
         okrobot_1.Platform.getInstance().setPlatform(new Platform_1.default());

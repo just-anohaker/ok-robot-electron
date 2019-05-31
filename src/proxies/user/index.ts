@@ -3,6 +3,7 @@ import { apiUser, MaybeUndefined, MarkedMap } from "okrobot";
 
 import IElectronProxy from "../../interfaces/electron-channel-proxy";
 import { electronResponse, electronCatch } from "../../base/Common";
+import EventBus from "../../base/EventBus";
 
 enum UserChannel {
     getall = "user.getall",

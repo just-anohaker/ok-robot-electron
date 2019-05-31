@@ -1,7 +1,9 @@
+import { WebContents } from "electron";
 import { Facade, UserProxy, UserMediator, Platform } from "okrobot";
 import ElectronPlatform from "./base/Platform";
 import IElectronProxy from "./interfaces/electron-channel-proxy"
 import ElectronUserProxy from "./proxies/user";
+import EventBus from "./base/EventBus";
 
 class Application {
     private static _instance?: Application;
@@ -21,6 +23,10 @@ class Application {
 
         this.initializeOkRobot();
         this.initializeElectron();
+    }
+
+    changeWebContents(newWebContents: WebContents): void {
+        EventBus.getInstance().eventEmitter = newWebContents;
     }
 
     private initializeOkRobot(): void {
