@@ -20,6 +20,6 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "okrobot": "git+https://github.com/just-anohaker/ok-robot-server.git"
+    "okrobot": "git+https://github.com/just-anohaker/ok-robot-server.git#dev"
   }
 }
