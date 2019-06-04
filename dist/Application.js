@@ -8,6 +8,10 @@ const okrobot_2 = require("okrobot");
 const okrobot_3 = require("okrobot");
 const Platform_1 = __importDefault(require("./base/Platform"));
 const user_1 = __importDefault(require("./proxies/user"));
+const auto_maker_1 = __importDefault(require("./proxies/auto_maker"));
+const auto_market_1 = __importDefault(require("./proxies/auto_market"));
+const batch_order_1 = __importDefault(require("./proxies/batch_order"));
+const take_order_1 = __importDefault(require("./proxies/take_order"));
 const EventBus_1 = __importDefault(require("./base/EventBus"));
 class Application {
     static getInstance() {
@@ -41,9 +45,14 @@ class Application {
         facadeInst.registerMediator(userMediator);
     }
     initializeElectron() {
-        const electronUserProxy = new user_1.default();
-        electronUserProxy.onReigster();
-        this._electronProxies.push(electronUserProxy);
+        this._electronProxies.push(new user_1.default());
+        this._electronProxies.push(new auto_maker_1.default());
+        this._electronProxies.push(new auto_market_1.default());
+        this._electronProxies.push(new batch_order_1.default());
+        this._electronProxies.push(new take_order_1.default());
+        for (const electronProxy of this._electronProxies) {
+            electronProxy.onReigster();
+        }
     }
 }
 exports.default = Application;

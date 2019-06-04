@@ -12,6 +12,10 @@ import {
 import ElectronPlatform from "./base/Platform";
 import IElectronProxy from "./interfaces/electron-channel-proxy"
 import ElectronUserProxy from "./proxies/user";
+import ElectronAutoMakerProxy from "./proxies/auto_maker";
+import ElectronAutoMarketProxy from "./proxies/auto_market";
+import ElectronBatchOrderProxy from "./proxies/batch_order";
+import ElectronTakeOrderProxy from "./proxies/take_order";
 import EventBus from "./base/EventBus";
 
 class Application {
@@ -59,9 +63,15 @@ class Application {
     }
 
     private initializeElectron(): void {
-        const electronUserProxy = new ElectronUserProxy();
-        electronUserProxy.onReigster();
-        this._electronProxies.push(electronUserProxy);
+        this._electronProxies.push(new ElectronUserProxy());
+        this._electronProxies.push(new ElectronAutoMakerProxy());
+        this._electronProxies.push(new ElectronAutoMarketProxy());
+        this._electronProxies.push(new ElectronBatchOrderProxy());
+        this._electronProxies.push(new ElectronTakeOrderProxy());
+
+        for (const electronProxy of this._electronProxies) {
+            electronProxy.onReigster();
+        }
     }
 
 }
