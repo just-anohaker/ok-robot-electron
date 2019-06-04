@@ -1,5 +1,14 @@
 import { WebContents } from "electron";
-import { Facade, UserProxy, UserMediator, Platform } from "okrobot";
+import { Platform, Facade } from "okrobot";
+import { UserMediator } from "okrobot";
+import {
+    UserProxy,
+    AutoMakerProxy,
+    AutoMarketProxy,
+    BatchOrderProxy,
+    TakeOrderProxy
+} from "okrobot";
+
 import ElectronPlatform from "./base/Platform";
 import IElectronProxy from "./interfaces/electron-channel-proxy"
 import ElectronUserProxy from "./proxies/user";
@@ -36,6 +45,14 @@ class Application {
 
         const userProxy = new UserProxy();
         facadeInst.registerProxy(userProxy);
+        const autoMakerProxy = new AutoMakerProxy();
+        facadeInst.registerProxy(autoMakerProxy);
+        const autoMarketProxy = new AutoMarketProxy();
+        facadeInst.registerProxy(autoMarketProxy);
+        const batchOrderProxy = new BatchOrderProxy();
+        facadeInst.registerProxy(batchOrderProxy);
+        const takeOrderProxy = new TakeOrderProxy();
+        facadeInst.registerProxy(takeOrderProxy);
 
         const userMediator = new UserMediator();
         facadeInst.registerMediator(userMediator);
