@@ -5,6 +5,7 @@ declare class Application {
     private _electronProxies;
     private constructor();
     changeWebContents(newWebContents: WebContents): void;
+    cwd(): string;
     private initializeOkRobot;
     private initializeElectron;
 }

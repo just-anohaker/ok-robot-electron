@@ -42,6 +42,10 @@ class Application {
         EventBus.getInstance().eventEmitter = newWebContents;
     }
 
+    cwd(): string {
+        return Platform.getInstance().getUserDataDir();
+    }
+
     private initializeOkRobot(): void {
         Platform.getInstance().setPlatform(new ElectronPlatform());
 

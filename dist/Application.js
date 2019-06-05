@@ -28,6 +28,9 @@ class Application {
     changeWebContents(newWebContents) {
         EventBus_1.default.getInstance().eventEmitter = newWebContents;
     }
+    cwd() {
+        return okrobot_1.Platform.getInstance().getUserDataDir();
+    }
     initializeOkRobot() {
         okrobot_1.Platform.getInstance().setPlatform(new Platform_1.default());
         const facadeInst = okrobot_1.Facade.getInstance();
