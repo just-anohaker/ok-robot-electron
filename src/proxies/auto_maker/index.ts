@@ -26,7 +26,7 @@ class ElectronAutoMakerProxy implements IElectronProxy {
 
     }
 
-    private init = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly init = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMaker.init(args || {})
             .then(result => {
                 electronResponse(event.sender, AutoMakerChannel.init, result);
@@ -36,7 +36,7 @@ class ElectronAutoMakerProxy implements IElectronProxy {
             });
     }
 
-    private start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMaker.start()
             .then(result => {
                 electronResponse(event.sender, AutoMakerChannel.start, result);
@@ -46,7 +46,7 @@ class ElectronAutoMakerProxy implements IElectronProxy {
             });
     }
 
-    private stop = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly stop = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMaker.stop()
             .then(result => {
                 electronResponse(event.sender, AutoMakerChannel.stop, result);
@@ -56,7 +56,7 @@ class ElectronAutoMakerProxy implements IElectronProxy {
             });
     }
 
-    private isRunning = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly isRunning = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMaker.isrunning()
             .then(result => {
                 electronResponse(event.sender, AutoMakerChannel.isRunning, result);
@@ -66,7 +66,7 @@ class ElectronAutoMakerProxy implements IElectronProxy {
             });
     }
 
-    private getOptionsAndAccount = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly getOptionsAndAccount = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMaker.optionAndAccount()
             .then(result => {
                 electronResponse(event.sender, AutoMakerChannel.getOptionsAndAccount, result);

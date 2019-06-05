@@ -26,7 +26,7 @@ class ElectronUserProxy implements IElectronProxy {
 
     }
 
-    private getAllUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly getAllUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiUser.getAll()
             .then(result => {
                 electronResponse(event.sender, UserChannel.getall, result);
@@ -36,7 +36,7 @@ class ElectronUserProxy implements IElectronProxy {
             });
     }
 
-    private getUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly getUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiUser.get(args || {})
             .then(result => {
                 electronResponse(event.sender, UserChannel.get, result);
@@ -46,7 +46,7 @@ class ElectronUserProxy implements IElectronProxy {
             });
     }
 
-    private addUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly addUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiUser.add(args || {})
             .then(result => {
                 electronResponse(event.sender, UserChannel.add, result);
@@ -56,7 +56,7 @@ class ElectronUserProxy implements IElectronProxy {
             });
     }
 
-    private removeUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly removeUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiUser.remove(args || {})
             .then(result => {
                 electronResponse(event.sender, UserChannel.remove, result);
@@ -66,7 +66,7 @@ class ElectronUserProxy implements IElectronProxy {
             });
     }
 
-    private updateUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly updateUser = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiUser.update(args || {})
             .then(result => {
                 electronResponse(event.sender, UserChannel.update, result);

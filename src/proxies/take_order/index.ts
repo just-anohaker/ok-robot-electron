@@ -20,7 +20,7 @@ class ElectronTakeOrderProxy implements IElectronProxy {
 
     }
 
-    private generate = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly generate = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiTakeOrder.generate(args || {})
             .then(result => {
                 electronResponse(event.sender, TakeOrderChannel.generate, result);
@@ -30,7 +30,7 @@ class ElectronTakeOrderProxy implements IElectronProxy {
             });
     }
 
-    private start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiTakeOrder.start(args || {})
             .then(result => {
                 electronResponse(event.sender, TakeOrderChannel.start, result);

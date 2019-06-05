@@ -26,7 +26,7 @@ class ElectronAutoMarketProxy implements IElectronProxy {
 
     }
 
-    private init = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly init = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMarket.init(args || {})
             .then(result => {
                 electronResponse(event.sender, AutoMarketChannel.init, result);
@@ -36,7 +36,7 @@ class ElectronAutoMarketProxy implements IElectronProxy {
             });
     }
 
-    private start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMarket.start()
             .then(result => {
                 electronResponse(event.sender, AutoMarketChannel.start, result);
@@ -46,7 +46,7 @@ class ElectronAutoMarketProxy implements IElectronProxy {
             });
     }
 
-    private stop = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly stop = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMarket.stop()
             .then(result => {
                 electronResponse(event.sender, AutoMarketChannel.stop, result);
@@ -56,7 +56,7 @@ class ElectronAutoMarketProxy implements IElectronProxy {
             });
     }
 
-    private isRunning = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly isRunning = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMarket.isrunning()
             .then(result => {
                 electronResponse(event.sender, AutoMarketChannel.isRunning, result);
@@ -66,7 +66,7 @@ class ElectronAutoMarketProxy implements IElectronProxy {
             });
     }
 
-    private getOptionsAndAccount = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly getOptionsAndAccount = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiAutoMarket.optionAndAccount()
             .then(result => {
                 electronResponse(event.sender, AutoMarketChannel.getOptionsAndAccount, result);
