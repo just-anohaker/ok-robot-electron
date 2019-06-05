@@ -5,7 +5,7 @@ import { IPlatform } from "okrobot";
 
 class ElectronPlatform implements IPlatform {
     getUserDataDir(): string {
-        const ownDirName = "OKExPreference";
+        const ownDirName = "okex_userdatas";
         const destDir = path.resolve(path.join(app.getPath("documents"), ownDirName));
 
         if (!fs.existsSync(destDir)) {

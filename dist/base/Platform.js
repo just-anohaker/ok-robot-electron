@@ -12,7 +12,7 @@ const fs = __importStar(require("fs"));
 const electron_1 = require("electron");
 class ElectronPlatform {
     getUserDataDir() {
-        const ownDirName = "OKExPreference";
+        const ownDirName = "okex_userdatas";
         const destDir = path.resolve(path.join(electron_1.app.getPath("documents"), ownDirName));
         if (!fs.existsSync(destDir)) {
             fs.mkdirSync(destDir);
