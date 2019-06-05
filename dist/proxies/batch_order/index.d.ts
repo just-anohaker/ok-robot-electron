@@ -3,7 +3,8 @@ declare class ElectronBatchOrderProxy implements IElectronProxy {
     onReigster(): void;
     onRemove(): void;
     private readonly generate;
-    private readonly start;
     private readonly cancel;
+    private readonly limitOrder;
+    private readonly marketOrder;
 }
 export default ElectronBatchOrderProxy;

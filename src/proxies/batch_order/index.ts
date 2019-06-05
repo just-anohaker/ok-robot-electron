@@ -7,15 +7,19 @@ import EventBus from "../../base/EventBus";
 
 enum BatchOrderChannel {
     generate = "batchorder.generate",
-    start = "batchorder.start",
-    cancel = "batchorder.cancel"
+    // start = "batchorder.start",
+    cancel = "batchorder.cancel",
+    limitOrder = "batchorder.limitOrder",
+    marketOrder = "batchorder.marketOrder"
 }
 
 class ElectronBatchOrderProxy implements IElectronProxy {
     onReigster() {
         ipcMain.on(BatchOrderChannel.generate, this.generate);
-        ipcMain.on(BatchOrderChannel.start, this.start);
+        // ipcMain.on(BatchOrderChannel.start, this.start);
         ipcMain.on(BatchOrderChannel.cancel, this.cancel);
+        ipcMain.on(BatchOrderChannel.limitOrder, this.limitOrder);
+        ipcMain.on(BatchOrderChannel.marketOrder, this.marketOrder);
     }
 
     onRemove() {
@@ -32,15 +36,15 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             });
     }
 
-    private readonly start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
-        apiBatchOrder.start(args || {})
-            .then(result => {
-                electronResponse(event.sender, BatchOrderChannel.start, result);
-            })
-            .catch(error => {
-                electronCatch(event.sender, BatchOrderChannel.start, error.toString());
-            });
-    }
+    // private readonly start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    //     apiBatchOrder.start(args || {})
+    //         .then(result => {
+    //             electronResponse(event.sender, BatchOrderChannel.start, result);
+    //         })
+    //         .catch(error => {
+    //             electronCatch(event.sender, BatchOrderChannel.start, error.toString());
+    //         });
+    // }
 
     private readonly cancel = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiBatchOrder.cancel(args || {})
@@ -49,6 +53,26 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             })
             .catch(error => {
                 electronCatch(event.sender, BatchOrderChannel.cancel, error.toString());
+            });
+    }
+
+    private readonly limitOrder = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.limitOrder(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.limitOrder, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.limitOrder, error.toString());
+            });
+    }
+
+    private readonly marketOrder = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.marketOrder(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.marketOrder, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.marketOrder, error.toString());
             });
     }
 }
