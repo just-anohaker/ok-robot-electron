@@ -1,5 +1,7 @@
 import { ipcMain, Event } from "electron";
 import { apiBatchOrder, MaybeUndefined, MarkedMap } from "okrobot";
+import { IObserver, Observer, INotification } from "okrobot";
+import { Facade } from "okrobot";
 
 import IElectronProxy from "../../interfaces/electron-channel-proxy";
 import { electronResponse, electronCatch } from "../../base/Common";
@@ -15,6 +17,12 @@ enum BatchOrderChannel {
 }
 
 class ElectronBatchOrderProxy implements IElectronProxy {
+    private _observer?: IObserver;
+
+    constructor() {
+        this._observer = new Observer(this.onNotification, this);
+    }
+
     onReigster() {
         ipcMain.on(BatchOrderChannel.generate, this.generate);
         // ipcMain.on(BatchOrderChannel.start, this.start);
@@ -22,6 +30,8 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.limitOrder, this.limitOrder);
         ipcMain.on(BatchOrderChannel.marketOrder, this.marketOrder);
         ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
+
+        Facade.getInstance().registerObserver("depth", this._observer!);
     }
 
     onRemove() {
@@ -86,6 +96,11 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             .catch(error => {
                 electronCatch(event.sender, BatchOrderChannel.startDepthInfo, error.toString());
             });
+    }
+
+    private readonly onNotification = (notification: INotification): void => {
+        console.log("[BatchOrderAPI] onNotification:", notification.getName());
+        EventBus.getInstance().emit(notification.getName(), notification.getBody());
     }
 }
 
