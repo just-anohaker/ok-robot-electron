@@ -11,7 +11,7 @@ enum BatchOrderChannel {
     cancel = "batchorder.cancel",
     limitOrder = "batchorder.limitOrder",
     marketOrder = "batchorder.marketOrder",
-    startDepthOrder = "batchorder.startDepthOrder"
+    startDepthInfo = "batchorder.startDepthInfo"
 }
 
 class ElectronBatchOrderProxy implements IElectronProxy {
@@ -21,7 +21,7 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.cancel, this.cancel);
         ipcMain.on(BatchOrderChannel.limitOrder, this.limitOrder);
         ipcMain.on(BatchOrderChannel.marketOrder, this.marketOrder);
-        ipcMain.on(BatchOrderChannel.startDepthOrder, this.startDepthOrder);
+        ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
     }
 
     onRemove() {
@@ -78,13 +78,13 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             });
     }
 
-    private readonly startDepthOrder = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+    private readonly startDepthInfo = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiBatchOrder.startDepInfo(args || {})
             .then(result => {
-                electronResponse(event.sender, BatchOrderChannel.startDepthOrder, result);
+                electronResponse(event.sender, BatchOrderChannel.startDepthInfo, result);
             })
             .catch(error => {
-                electronCatch(event.sender, BatchOrderChannel.startDepthOrder, error.toString());
+                electronCatch(event.sender, BatchOrderChannel.startDepthInfo, error.toString());
             });
     }
 }

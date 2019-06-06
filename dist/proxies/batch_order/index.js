@@ -10,7 +10,7 @@ var BatchOrderChannel;
     BatchOrderChannel["cancel"] = "batchorder.cancel";
     BatchOrderChannel["limitOrder"] = "batchorder.limitOrder";
     BatchOrderChannel["marketOrder"] = "batchorder.marketOrder";
-    BatchOrderChannel["startDepthOrder"] = "batchorder.startDepthOrder";
+    BatchOrderChannel["startDepthInfo"] = "batchorder.startDepthInfo";
 })(BatchOrderChannel || (BatchOrderChannel = {}));
 class ElectronBatchOrderProxy {
     constructor() {
@@ -59,13 +59,13 @@ class ElectronBatchOrderProxy {
                 Common_1.electronCatch(event.sender, BatchOrderChannel.marketOrder, error.toString());
             });
         };
-        this.startDepthOrder = (event, args) => {
+        this.startDepthInfo = (event, args) => {
             okrobot_1.apiBatchOrder.startDepInfo(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.startDepthOrder, result);
+                Common_1.electronResponse(event.sender, BatchOrderChannel.startDepthInfo, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.startDepthOrder, error.toString());
+                Common_1.electronCatch(event.sender, BatchOrderChannel.startDepthInfo, error.toString());
             });
         };
     }
@@ -75,7 +75,7 @@ class ElectronBatchOrderProxy {
         electron_1.ipcMain.on(BatchOrderChannel.cancel, this.cancel);
         electron_1.ipcMain.on(BatchOrderChannel.limitOrder, this.limitOrder);
         electron_1.ipcMain.on(BatchOrderChannel.marketOrder, this.marketOrder);
-        electron_1.ipcMain.on(BatchOrderChannel.startDepthOrder, this.startDepthOrder);
+        electron_1.ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
     }
     onRemove() {
     }
