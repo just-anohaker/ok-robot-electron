@@ -17,6 +17,8 @@ var BatchOrderChannel;
     BatchOrderChannel["limitOrder"] = "batchorder.limitOrder";
     BatchOrderChannel["marketOrder"] = "batchorder.marketOrder";
     BatchOrderChannel["startDepthInfo"] = "batchorder.startDepthInfo";
+    BatchOrderChannel["stopDepthInfo"] = "batchorder.stopDepthInfo";
+    BatchOrderChannel["getOrderData"] = "batchorder.getOrderData";
 })(BatchOrderChannel || (BatchOrderChannel = {}));
 class ElectronBatchOrderProxy {
     constructor() {
@@ -74,6 +76,24 @@ class ElectronBatchOrderProxy {
                 Common_1.electronCatch(event.sender, BatchOrderChannel.startDepthInfo, error.toString());
             });
         };
+        this.stopDepthInfo = (event, args) => {
+            okrobot_1.apiBatchOrder.stopDepInfo()
+                .then(result => {
+                Common_1.electronResponse(event.sender, BatchOrderChannel.stopDepthInfo, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, BatchOrderChannel.stopDepthInfo, error.toString());
+            });
+        };
+        this.getOrderData = (event, args) => {
+            okrobot_1.apiBatchOrder.getOrderData(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, BatchOrderChannel.getOrderData, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, BatchOrderChannel.stopDepthInfo, error.toString());
+            });
+        };
         this.onNotification = (notification) => {
             console.log("[BatchOrderAPI] onNotification:", notification.getName());
             EventBus_1.default.getInstance().emit(notification.getName(), notification.getBody());
@@ -87,6 +107,8 @@ class ElectronBatchOrderProxy {
         electron_1.ipcMain.on(BatchOrderChannel.limitOrder, this.limitOrder);
         electron_1.ipcMain.on(BatchOrderChannel.marketOrder, this.marketOrder);
         electron_1.ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
+        electron_1.ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
+        electron_1.ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
         okrobot_3.Facade.getInstance().registerObserver("depth", this._observer);
     }
     onRemove() {

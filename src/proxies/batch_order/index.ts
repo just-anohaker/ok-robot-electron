@@ -13,7 +13,9 @@ enum BatchOrderChannel {
     cancel = "batchorder.cancel",
     limitOrder = "batchorder.limitOrder",
     marketOrder = "batchorder.marketOrder",
-    startDepthInfo = "batchorder.startDepthInfo"
+    startDepthInfo = "batchorder.startDepthInfo",
+    stopDepthInfo = "batchorder.stopDepthInfo",
+    getOrderData = "batchorder.getOrderData"
 }
 
 class ElectronBatchOrderProxy implements IElectronProxy {
@@ -30,6 +32,8 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.limitOrder, this.limitOrder);
         ipcMain.on(BatchOrderChannel.marketOrder, this.marketOrder);
         ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
+        ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
+        ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
 
         Facade.getInstance().registerObserver("depth", this._observer!);
     }
@@ -95,6 +99,26 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             })
             .catch(error => {
                 electronCatch(event.sender, BatchOrderChannel.startDepthInfo, error.toString());
+            });
+    }
+
+    private readonly stopDepthInfo = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.stopDepInfo()
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.stopDepthInfo, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.stopDepthInfo, error.toString());
+            });
+    }
+
+    private readonly getOrderData = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.getOrderData(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.getOrderData, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.stopDepthInfo, error.toString());
             });
     }
 

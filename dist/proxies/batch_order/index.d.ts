@@ -9,6 +9,8 @@ declare class ElectronBatchOrderProxy implements IElectronProxy {
     private readonly limitOrder;
     private readonly marketOrder;
     private readonly startDepthInfo;
+    private readonly stopDepthInfo;
+    private readonly getOrderData;
     private readonly onNotification;
 }
 export default ElectronBatchOrderProxy;
