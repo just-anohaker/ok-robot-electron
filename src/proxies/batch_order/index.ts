@@ -7,16 +7,21 @@ import IElectronProxy from "../../interfaces/electron-channel-proxy";
 import { electronResponse, electronCatch } from "../../base/Common";
 import EventBus from "../../base/EventBus";
 
-enum BatchOrderChannel {
+const enum BatchOrderChannel {
     generate = "batchorder.generate",
     // start = "batchorder.start",
     cancel = "batchorder.cancel",
     limitOrder = "batchorder.limitOrder",
     marketOrder = "batchorder.marketOrder",
+    icebergOrder = "batchorder.icebergOrder",
     startDepthInfo = "batchorder.startDepthInfo",
     stopDepthInfo = "batchorder.stopDepthInfo",
     getOrderData = "batchorder.getOrderData"
 }
+
+const enum BatchOrderEvents {
+    depth = "depth"
+};
 
 class ElectronBatchOrderProxy implements IElectronProxy {
     private _observer?: IObserver;
@@ -35,7 +40,7 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
         ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
 
-        Facade.getInstance().registerObserver("depth", this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
     }
 
     onRemove() {
@@ -92,6 +97,16 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             });
     }
 
+    private readonly icebergOrder = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        // apiBatchOrder.icebergOrder(args || {})
+        //     .then(result => {
+        //         electronResponse(event.sender, BatchOrderChannel.icebergOrder, result);
+        //     })
+        //     .catch(error => {
+        //         electronCatch(event.sender, BatchOrderChannel.icebergOrder, error.toString());
+        //     });
+    }
+
     private readonly startDepthInfo = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
         apiBatchOrder.startDepInfo(args || {})
             .then(result => {
@@ -103,7 +118,7 @@ class ElectronBatchOrderProxy implements IElectronProxy {
     }
 
     private readonly stopDepthInfo = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
-        apiBatchOrder.stopDepInfo()
+        apiBatchOrder.stopDepInfo(args || {})
             .then(result => {
                 electronResponse(event.sender, BatchOrderChannel.stopDepthInfo, result);
             })

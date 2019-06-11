@@ -5,7 +5,7 @@ import IElectronProxy from "../../interfaces/electron-channel-proxy";
 import { electronResponse, electronCatch } from "../../base/Common";
 import EventBus from "../../base/EventBus";
 
-enum UserChannel {
+const enum UserChannel {
     getall = "user.getall",
     get = "user.get",
     add = "user.add",

@@ -8,6 +8,7 @@ declare class ElectronBatchOrderProxy implements IElectronProxy {
     private readonly cancel;
     private readonly limitOrder;
     private readonly marketOrder;
+    private readonly icebergOrder;
     private readonly startDepthInfo;
     private readonly stopDepthInfo;
     private readonly getOrderData;

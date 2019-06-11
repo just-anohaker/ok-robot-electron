@@ -5,7 +5,7 @@ import IElectronProxy from "../../interfaces/electron-channel-proxy";
 import { electronResponse, electronCatch } from "../../base/Common";
 import EventBus from "../../base/EventBus";
 
-enum AutoMakerChannel {
+const enum AutoMakerChannel {
     init = "automaker.init",
     start = "automaker.start",
     stop = "automaker.stop",

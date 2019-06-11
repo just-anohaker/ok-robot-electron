@@ -9,26 +9,16 @@ const okrobot_2 = require("okrobot");
 const okrobot_3 = require("okrobot");
 const Common_1 = require("../../base/Common");
 const EventBus_1 = __importDefault(require("../../base/EventBus"));
-var BatchOrderChannel;
-(function (BatchOrderChannel) {
-    BatchOrderChannel["generate"] = "batchorder.generate";
-    // start = "batchorder.start",
-    BatchOrderChannel["cancel"] = "batchorder.cancel";
-    BatchOrderChannel["limitOrder"] = "batchorder.limitOrder";
-    BatchOrderChannel["marketOrder"] = "batchorder.marketOrder";
-    BatchOrderChannel["startDepthInfo"] = "batchorder.startDepthInfo";
-    BatchOrderChannel["stopDepthInfo"] = "batchorder.stopDepthInfo";
-    BatchOrderChannel["getOrderData"] = "batchorder.getOrderData";
-})(BatchOrderChannel || (BatchOrderChannel = {}));
+;
 class ElectronBatchOrderProxy {
     constructor() {
         this.generate = (event, args) => {
             okrobot_1.apiBatchOrder.generate(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.generate, result);
+                Common_1.electronResponse(event.sender, "batchorder.generate" /* generate */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.generate, error.toString());
+                Common_1.electronCatch(event.sender, "batchorder.generate" /* generate */, error.toString());
             });
         };
         // private readonly start = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
@@ -43,55 +33,64 @@ class ElectronBatchOrderProxy {
         this.cancel = (event, args) => {
             okrobot_1.apiBatchOrder.cancel(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.cancel, result);
+                Common_1.electronResponse(event.sender, "batchorder.cancel" /* cancel */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.cancel, error.toString());
+                Common_1.electronCatch(event.sender, "batchorder.cancel" /* cancel */, error.toString());
             });
         };
         this.limitOrder = (event, args) => {
             okrobot_1.apiBatchOrder.limitOrder(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.limitOrder, result);
+                Common_1.electronResponse(event.sender, "batchorder.limitOrder" /* limitOrder */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.limitOrder, error.toString());
+                Common_1.electronCatch(event.sender, "batchorder.limitOrder" /* limitOrder */, error.toString());
             });
         };
         this.marketOrder = (event, args) => {
             okrobot_1.apiBatchOrder.marketOrder(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.marketOrder, result);
+                Common_1.electronResponse(event.sender, "batchorder.marketOrder" /* marketOrder */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.marketOrder, error.toString());
+                Common_1.electronCatch(event.sender, "batchorder.marketOrder" /* marketOrder */, error.toString());
             });
+        };
+        this.icebergOrder = (event, args) => {
+            // apiBatchOrder.icebergOrder(args || {})
+            //     .then(result => {
+            //         electronResponse(event.sender, BatchOrderChannel.icebergOrder, result);
+            //     })
+            //     .catch(error => {
+            //         electronCatch(event.sender, BatchOrderChannel.icebergOrder, error.toString());
+            //     });
         };
         this.startDepthInfo = (event, args) => {
             okrobot_1.apiBatchOrder.startDepInfo(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.startDepthInfo, result);
+                Common_1.electronResponse(event.sender, "batchorder.startDepthInfo" /* startDepthInfo */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.startDepthInfo, error.toString());
+                Common_1.electronCatch(event.sender, "batchorder.startDepthInfo" /* startDepthInfo */, error.toString());
             });
         };
         this.stopDepthInfo = (event, args) => {
-            okrobot_1.apiBatchOrder.stopDepInfo()
+            okrobot_1.apiBatchOrder.stopDepInfo(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.stopDepthInfo, result);
+                Common_1.electronResponse(event.sender, "batchorder.stopDepthInfo" /* stopDepthInfo */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.stopDepthInfo, error.toString());
+                Common_1.electronCatch(event.sender, "batchorder.stopDepthInfo" /* stopDepthInfo */, error.toString());
             });
         };
         this.getOrderData = (event, args) => {
             okrobot_1.apiBatchOrder.getOrderData(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, BatchOrderChannel.getOrderData, result);
+                Common_1.electronResponse(event.sender, "batchorder.getOrderData" /* getOrderData */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, BatchOrderChannel.stopDepthInfo, error.toString());
+                Common_1.electronCatch(event.sender, "batchorder.stopDepthInfo" /* stopDepthInfo */, error.toString());
             });
         };
         this.onNotification = (notification) => {
@@ -101,15 +100,15 @@ class ElectronBatchOrderProxy {
         this._observer = new okrobot_2.Observer(this.onNotification, this);
     }
     onReigster() {
-        electron_1.ipcMain.on(BatchOrderChannel.generate, this.generate);
+        electron_1.ipcMain.on("batchorder.generate" /* generate */, this.generate);
         // ipcMain.on(BatchOrderChannel.start, this.start);
-        electron_1.ipcMain.on(BatchOrderChannel.cancel, this.cancel);
-        electron_1.ipcMain.on(BatchOrderChannel.limitOrder, this.limitOrder);
-        electron_1.ipcMain.on(BatchOrderChannel.marketOrder, this.marketOrder);
-        electron_1.ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
-        electron_1.ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
-        electron_1.ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
-        okrobot_3.Facade.getInstance().registerObserver("depth", this._observer);
+        electron_1.ipcMain.on("batchorder.cancel" /* cancel */, this.cancel);
+        electron_1.ipcMain.on("batchorder.limitOrder" /* limitOrder */, this.limitOrder);
+        electron_1.ipcMain.on("batchorder.marketOrder" /* marketOrder */, this.marketOrder);
+        electron_1.ipcMain.on("batchorder.startDepthInfo" /* startDepthInfo */, this.startDepthInfo);
+        electron_1.ipcMain.on("batchorder.stopDepthInfo" /* stopDepthInfo */, this.stopDepthInfo);
+        electron_1.ipcMain.on("batchorder.getOrderData" /* getOrderData */, this.getOrderData);
+        okrobot_3.Facade.getInstance().registerObserver("depth" /* depth */, this._observer);
     }
     onRemove() {
     }

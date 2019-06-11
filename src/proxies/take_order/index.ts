@@ -5,7 +5,7 @@ import IElectronProxy from "../../interfaces/electron-channel-proxy";
 import { electronResponse, electronCatch } from "../../base/Common";
 import EventBus from "../../base/EventBus";
 
-enum TakeOrderChannel {
+const enum TakeOrderChannel {
     generate = "batchorder.generate",
     start = "batchorder.start"
 }
