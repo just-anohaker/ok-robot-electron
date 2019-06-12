@@ -6,8 +6,8 @@ import { electronResponse, electronCatch } from "../../base/Common";
 import EventBus from "../../base/EventBus";
 
 const enum TakeOrderChannel {
-    generate = "batchorder.generate",
-    start = "batchorder.start"
+    generate = "takeorder.generate",
+    start = "takeorder.start"
 }
 
 class ElectronTakeOrderProxy implements IElectronProxy {

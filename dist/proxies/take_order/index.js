@@ -8,25 +8,25 @@ class ElectronTakeOrderProxy {
         this.generate = (event, args) => {
             okrobot_1.apiTakeOrder.generate(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, "batchorder.generate" /* generate */, result);
+                Common_1.electronResponse(event.sender, "takeorder.generate" /* generate */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, "batchorder.start" /* start */, error.toString());
+                Common_1.electronCatch(event.sender, "takeorder.start" /* start */, error.toString());
             });
         };
         this.start = (event, args) => {
             okrobot_1.apiTakeOrder.start(args || {})
                 .then(result => {
-                Common_1.electronResponse(event.sender, "batchorder.start" /* start */, result);
+                Common_1.electronResponse(event.sender, "takeorder.start" /* start */, result);
             })
                 .catch(error => {
-                Common_1.electronCatch(event.sender, "batchorder.start" /* start */, error.toString());
+                Common_1.electronCatch(event.sender, "takeorder.start" /* start */, error.toString());
             });
         };
     }
     onReigster() {
-        electron_1.ipcMain.on("batchorder.generate" /* generate */, this.generate);
-        electron_1.ipcMain.on("batchorder.start" /* start */, this.start);
+        electron_1.ipcMain.on("takeorder.generate" /* generate */, this.generate);
+        electron_1.ipcMain.on("takeorder.start" /* start */, this.start);
     }
     onRemove() {
     }
