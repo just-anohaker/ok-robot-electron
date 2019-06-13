@@ -16,11 +16,19 @@ const enum BatchOrderChannel {
     icebergOrder = "batchorder.icebergOrder",
     startDepthInfo = "batchorder.startDepthInfo",
     stopDepthInfo = "batchorder.stopDepthInfo",
-    getOrderData = "batchorder.getOrderData"
+    getOrderData = "batchorder.getOrderData",
+    pageInfo = "batchorder.pageInfo",
+    pageKline = "batchorder.pageKline"
 }
 
 const enum BatchOrderEvents {
-    depth = "depth"
+    depth = "depth",
+    Candle_ETM_USDT = "page/candle:ETM-USDT",
+    Candle_ETM_USDK = "page/candle:ETM-USDK",
+    Ticker_ETM_USDT = "page/ticker:ETM-USDT",
+    Ticker_ETM_USDK = "page/ticker:ETM-USDK",
+    Trade_ETM_USDT = "page/trade:ETM-USDT",
+    Trade_ETM_USDK = "page/trade:ETM-USDK"
 };
 
 class ElectronBatchOrderProxy implements IElectronProxy {
@@ -39,8 +47,16 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
         ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
         ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
+        ipcMain.on(BatchOrderChannel.pageInfo, this.pageInfo);
+        ipcMain.on(BatchOrderChannel.pageKline, this.pageKline);
 
         Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.Candle_ETM_USDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.Candle_ETM_USDT, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.Ticker_ETM_USDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.Ticker_ETM_USDT, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.Trade_ETM_USDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.Trade_ETM_USDT, this._observer!);
     }
 
     onRemove() {
@@ -137,8 +153,28 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             });
     }
 
+    private readonly pageInfo = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.pageInfo(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.pageInfo, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.pageInfo, error.toString());
+            });
+    }
+
+    private readonly pageKline = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.pageKline(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.pageKline, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.pageKline, error.toString());
+            });
+    }
+
     private readonly onNotification = (notification: INotification): void => {
-        console.log("[BatchOrderAPI] onNotification:", notification.getName());
+        // console.log("[BatchOrderAPI] onNotification:", notification.getName());
         EventBus.getInstance().emit(notification.getName(), notification.getBody());
     }
 }
