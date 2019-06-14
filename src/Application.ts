@@ -6,7 +6,9 @@ import {
     AutoMakerProxy,
     AutoMarketProxy,
     BatchOrderProxy,
-    TakeOrderProxy
+    TakeOrderProxy,
+    OkexUtilsProxy,
+    OkexMonitProxy
 } from "okrobot";
 
 import ElectronPlatform from "./base/Platform";
@@ -16,6 +18,8 @@ import ElectronAutoMakerProxy from "./proxies/auto_maker";
 import ElectronAutoMarketProxy from "./proxies/auto_market";
 import ElectronBatchOrderProxy from "./proxies/batch_order";
 import ElectronTakeOrderProxy from "./proxies/take_order";
+import ElectronOkexUtilsProxy from "./proxies/okex_utils";
+import ElectronOkexMonitorProxy from "./proxies/okex_monitor";
 import EventBus from "./base/EventBus";
 
 class Application {
@@ -61,6 +65,10 @@ class Application {
         facadeInst.registerProxy(batchOrderProxy);
         const takeOrderProxy = new TakeOrderProxy();
         facadeInst.registerProxy(takeOrderProxy);
+        const okexUtilsProxy = new OkexUtilsProxy();
+        facadeInst.registerProxy(okexUtilsProxy);
+        const okexMonitorProxy = new OkexMonitProxy();
+        facadeInst.registerProxy(okexMonitorProxy);
 
         const userMediator = new UserMediator();
         facadeInst.registerMediator(userMediator);
@@ -72,6 +80,8 @@ class Application {
         this._electronProxies.push(new ElectronAutoMarketProxy());
         this._electronProxies.push(new ElectronBatchOrderProxy());
         this._electronProxies.push(new ElectronTakeOrderProxy());
+        this._electronProxies.push(new ElectronOkexUtilsProxy());
+        this._electronProxies.push(new ElectronOkexMonitorProxy())
 
         for (const electronProxy of this._electronProxies) {
             electronProxy.onReigster();

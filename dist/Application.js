@@ -12,6 +12,8 @@ const auto_maker_1 = __importDefault(require("./proxies/auto_maker"));
 const auto_market_1 = __importDefault(require("./proxies/auto_market"));
 const batch_order_1 = __importDefault(require("./proxies/batch_order"));
 const take_order_1 = __importDefault(require("./proxies/take_order"));
+const okex_utils_1 = __importDefault(require("./proxies/okex_utils"));
+const okex_monitor_1 = __importDefault(require("./proxies/okex_monitor"));
 const EventBus_1 = __importDefault(require("./base/EventBus"));
 class Application {
     static getInstance() {
@@ -44,6 +46,10 @@ class Application {
         facadeInst.registerProxy(batchOrderProxy);
         const takeOrderProxy = new okrobot_3.TakeOrderProxy();
         facadeInst.registerProxy(takeOrderProxy);
+        const okexUtilsProxy = new okrobot_3.OkexUtilsProxy();
+        facadeInst.registerProxy(okexUtilsProxy);
+        const okexMonitorProxy = new okrobot_3.OkexMonitProxy();
+        facadeInst.registerProxy(okexMonitorProxy);
         const userMediator = new okrobot_2.UserMediator();
         facadeInst.registerMediator(userMediator);
     }
@@ -53,6 +59,8 @@ class Application {
         this._electronProxies.push(new auto_market_1.default());
         this._electronProxies.push(new batch_order_1.default());
         this._electronProxies.push(new take_order_1.default());
+        this._electronProxies.push(new okex_utils_1.default());
+        this._electronProxies.push(new okex_monitor_1.default());
         for (const electronProxy of this._electronProxies) {
             electronProxy.onReigster();
         }

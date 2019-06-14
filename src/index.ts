@@ -10,6 +10,7 @@ export { default as ElectronAutoMarketProxy } from "./proxies/auto_market";
 export { default as ElectronBatchOrderProxy } from "./proxies/batch_order";
 export { default as ElectronTakeOrderProxy } from "./proxies/take_order";
 export { default as ElectronOkexUtilsProxy } from "./proxies/okex_utils";
+export { default as ElectronOkexMonitorProxy } from "./proxies/okex_monitor";
 
 // /> Application
 
