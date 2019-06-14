@@ -1,5 +1,5 @@
 import { ipcMain, Event } from "electron";
-import { apiBatchOrder, MaybeUndefined, MarkedMap } from "okrobot";
+import { apiOkexUtils, MaybeUndefined, MarkedMap } from "okrobot";
 
 import IElectronProxy from "../../interfaces/electron-channel-proxy";
 import { electronResponse, electronCatch } from "../../base/Common";
@@ -21,7 +21,7 @@ class ElectronOkexUtilsProxy implements IElectronProxy {
     }
 
     private readonly getSpotTrade = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
-        apiBatchOrder.getTradeData(args || {})
+        apiOkexUtils.getSpotTrade(args || {})
             .then(result => {
                 electronResponse(event.sender, TakeOrderChannel.getSpotTrade, result);
             })
@@ -31,7 +31,7 @@ class ElectronOkexUtilsProxy implements IElectronProxy {
     }
 
     private readonly getSpotCandles = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
-        apiBatchOrder.getCandlesData(args || {})
+        apiOkexUtils.getSpotCandles(args || {})
             .then(result => {
                 electronResponse(event.sender, TakeOrderChannel.getSpotCandles, result);
             })

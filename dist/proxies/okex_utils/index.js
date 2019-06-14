@@ -6,7 +6,7 @@ const Common_1 = require("../../base/Common");
 class ElectronOkexUtilsProxy {
     constructor() {
         this.getSpotTrade = (event, args) => {
-            okrobot_1.apiBatchOrder.getTradeData(args || {})
+            okrobot_1.apiOkexUtils.getSpotTrade(args || {})
                 .then(result => {
                 Common_1.electronResponse(event.sender, "okex_utils.getSpotTrade" /* getSpotTrade */, result);
             })
@@ -15,7 +15,7 @@ class ElectronOkexUtilsProxy {
             });
         };
         this.getSpotCandles = (event, args) => {
-            okrobot_1.apiBatchOrder.getCandlesData(args || {})
+            okrobot_1.apiOkexUtils.getSpotCandles(args || {})
                 .then(result => {
                 Common_1.electronResponse(event.sender, "okex_utils.getSpotCandles" /* getSpotCandles */, result);
             })
