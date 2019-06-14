@@ -12,8 +12,6 @@ declare class ElectronBatchOrderProxy implements IElectronProxy {
     private readonly startDepthInfo;
     private readonly stopDepthInfo;
     private readonly getOrderData;
-    private readonly pageInfo;
-    private readonly pageKline;
     private readonly onNotification;
 }
 export default ElectronBatchOrderProxy;

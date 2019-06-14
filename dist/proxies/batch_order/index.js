@@ -93,24 +93,6 @@ class ElectronBatchOrderProxy {
                 Common_1.electronCatch(event.sender, "batchorder.stopDepthInfo" /* stopDepthInfo */, error.toString());
             });
         };
-        this.pageInfo = (event, args) => {
-            okrobot_1.apiBatchOrder.pageInfo(args || {})
-                .then(result => {
-                Common_1.electronResponse(event.sender, "batchorder.pageInfo" /* pageInfo */, result);
-            })
-                .catch(error => {
-                Common_1.electronCatch(event.sender, "batchorder.pageInfo" /* pageInfo */, error.toString());
-            });
-        };
-        this.pageKline = (event, args) => {
-            okrobot_1.apiBatchOrder.pageKline(args || {})
-                .then(result => {
-                Common_1.electronResponse(event.sender, "batchorder.pageKline" /* pageKline */, result);
-            })
-                .catch(error => {
-                Common_1.electronCatch(event.sender, "batchorder.pageKline" /* pageKline */, error.toString());
-            });
-        };
         this.onNotification = (notification) => {
             // console.log("[BatchOrderAPI] onNotification:", notification.getName());
             EventBus_1.default.getInstance().emit(notification.getName(), notification.getBody());
@@ -126,15 +108,7 @@ class ElectronBatchOrderProxy {
         electron_1.ipcMain.on("batchorder.startDepthInfo" /* startDepthInfo */, this.startDepthInfo);
         electron_1.ipcMain.on("batchorder.stopDepthInfo" /* stopDepthInfo */, this.stopDepthInfo);
         electron_1.ipcMain.on("batchorder.getOrderData" /* getOrderData */, this.getOrderData);
-        electron_1.ipcMain.on("batchorder.pageInfo" /* pageInfo */, this.pageInfo);
-        electron_1.ipcMain.on("batchorder.pageKline" /* pageKline */, this.pageKline);
         okrobot_3.Facade.getInstance().registerObserver("depth" /* depth */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("page/candle:ETM-USDK" /* Candle_ETM_USDK */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("page/candle:ETM-USDT" /* Candle_ETM_USDT */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("page/ticker:ETM-USDK" /* Ticker_ETM_USDK */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("page/ticker:ETM-USDT" /* Ticker_ETM_USDT */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("page/trade:ETM-USDK" /* Trade_ETM_USDK */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("page/trade:ETM-USDT" /* Trade_ETM_USDT */, this._observer);
     }
     onRemove() {
     }
