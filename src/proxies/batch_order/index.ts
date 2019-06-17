@@ -21,8 +21,8 @@ const enum BatchOrderChannel {
 
 const enum BatchOrderEvents {
     depth = "depth",
-    kDepthUSDT = "depth:USDT",
-    kDepthUSDK = "depth:USDK"
+    kDepthUSDT = "depth:ETM-USDT",
+    kDepthUSDK = "depth:ETM-USDK"
 };
 
 class ElectronBatchOrderProxy implements IElectronProxy {

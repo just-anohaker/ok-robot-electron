@@ -109,8 +109,8 @@ class ElectronBatchOrderProxy {
         electron_1.ipcMain.on("batchorder.stopDepthInfo" /* stopDepthInfo */, this.stopDepthInfo);
         electron_1.ipcMain.on("batchorder.getOrderData" /* getOrderData */, this.getOrderData);
         // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
-        okrobot_3.Facade.getInstance().registerObserver("depth:USDT" /* kDepthUSDT */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("depth:USDK" /* kDepthUSDK */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDT" /* kDepthUSDT */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDK" /* kDepthUSDK */, this._observer);
     }
     onRemove() {
     }
