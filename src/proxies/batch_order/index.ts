@@ -21,6 +21,8 @@ const enum BatchOrderChannel {
 
 const enum BatchOrderEvents {
     depth = "depth",
+    kDepthUSDT = "depth:USDT",
+    kDepthUSDK = "depth:USDK"
 };
 
 class ElectronBatchOrderProxy implements IElectronProxy {
@@ -40,7 +42,10 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
         ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
 
-        Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
+        // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kDepthUSDT, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kDepthUSDK, this._observer!);
+
     }
 
     onRemove() {
