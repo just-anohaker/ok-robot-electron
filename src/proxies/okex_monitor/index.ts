@@ -13,7 +13,9 @@ const enum OkexMonitorChannel {
     monitSpotTicker = "okex_monitor.spotTicker",
     unmonitSpotTicker = "okex_monitor.spotTicker.unmonit",
     monitSpotChannel = "okex_monitor.spotChannel",
-    unmonitSpotChannel = "okex_monitor.spotChannel.unmonit"
+    unmonitSpotChannel = "okex_monitor.spotChannel.unmonit",
+    monitSpotDepth = "okex_monitor.spotDepth",
+    unmonitSpotDepth = "okex_monitor.spotDepth.unmonit"
 }
 
 class ElectronOkexMonitProxy implements IElectronProxy {
@@ -32,6 +34,8 @@ class ElectronOkexMonitProxy implements IElectronProxy {
         ipcMain.on(OkexMonitorChannel.unmonitSpotTicker, this.unmonitSpotTicker);
         ipcMain.on(OkexMonitorChannel.monitSpotChannel, this.monitSpotChannel);
         ipcMain.on(OkexMonitorChannel.unmonitSpotChannel, this.unmonitSpotChannel);
+        ipcMain.on(OkexMonitorChannel.monitSpotDepth, this.monitSpotDepth);
+        ipcMain.on(OkexMonitorChannel.unmonitSpotDepth, this.unmonitSpotDepth);
     }
 
     onRemove() {
@@ -145,6 +149,34 @@ class ElectronOkexMonitProxy implements IElectronProxy {
             .catch(error => {
                 electronCatch(event.sender, OkexMonitorChannel.unmonitSpotChannel, error.toString());
             });
+    }
+
+    private readonly monitSpotDepth = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiOkexMonit.monitSpotDepth(args || {})
+            .then(result => {
+                if (result.success) {
+                    const eventName = result.result as string;
+                    this._registerObserver(eventName);
+                }
+                electronResponse(event.sender, OkexMonitorChannel.monitSpotDepth, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, OkexMonitorChannel.monitSpotDepth, error.toString());
+            });
+    }
+
+    private readonly unmonitSpotDepth = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiOkexMonit.unmonitSpotDepth(args || {})
+            .then(result => {
+                if (result.success) {
+                    const eventName = result.result as string;
+                    this._unregisterObserver(eventName);
+                }
+                electronResponse(event.sender, OkexMonitorChannel.unmonitSpotDepth, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, OkexMonitorChannel.unmonitSpotDepth, error.toString());
+            })
     }
 
     private readonly onNotification = (notification: INotification): void => {

@@ -89,6 +89,32 @@ class ElectronOkexMonitProxy {
                 Common_1.electronCatch(event.sender, "okex_monitor.spotChannel.unmonit" /* unmonitSpotChannel */, error.toString());
             });
         };
+        this.monitSpotDepth = (event, args) => {
+            okrobot_1.apiOkexMonit.monitSpotDepth(args || {})
+                .then(result => {
+                if (result.success) {
+                    const eventName = result.result;
+                    this._registerObserver(eventName);
+                }
+                Common_1.electronResponse(event.sender, "okex_monitor.spotDepth" /* monitSpotDepth */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "okex_monitor.spotDepth" /* monitSpotDepth */, error.toString());
+            });
+        };
+        this.unmonitSpotDepth = (event, args) => {
+            okrobot_1.apiOkexMonit.unmonitSpotDepth(args || {})
+                .then(result => {
+                if (result.success) {
+                    const eventName = result.result;
+                    this._unregisterObserver(eventName);
+                }
+                Common_1.electronResponse(event.sender, "okex_monitor.spotDepth.unmonit" /* unmonitSpotDepth */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "okex_monitor.spotDepth.unmonit" /* unmonitSpotDepth */, error.toString());
+            });
+        };
         this.onNotification = (notification) => {
             // console.log("[BatchOrderAPI] onNotification:", notification.getName());
             EventBus_1.default.getInstance().emit(notification.getName(), notification.getBody());
@@ -103,6 +129,8 @@ class ElectronOkexMonitProxy {
         electron_1.ipcMain.on("okex_monitor.spotTicker.unmonit" /* unmonitSpotTicker */, this.unmonitSpotTicker);
         electron_1.ipcMain.on("okex_monitor.spotChannel" /* monitSpotChannel */, this.monitSpotChannel);
         electron_1.ipcMain.on("okex_monitor.spotChannel.unmonit" /* unmonitSpotChannel */, this.unmonitSpotChannel);
+        electron_1.ipcMain.on("okex_monitor.spotDepth" /* monitSpotDepth */, this.monitSpotDepth);
+        electron_1.ipcMain.on("okex_monitor.spotDepth.unmonit" /* unmonitSpotDepth */, this.unmonitSpotDepth);
     }
     onRemove() {
     }
