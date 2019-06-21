@@ -115,6 +115,32 @@ class ElectronOkexMonitProxy {
                 Common_1.electronCatch(event.sender, "okex_monitor.spotDepth.unmonit" /* unmonitSpotDepth */, error.toString());
             });
         };
+        this.monitSpotWallet = (event, args) => {
+            okrobot_1.apiOkexMonit.monitWallet(args || {})
+                .then(result => {
+                if (result.success) {
+                    const eventName = result.result;
+                    this._registerObserver(eventName);
+                }
+                Common_1.electronResponse(event.sender, "okex_monitor.spotWallet" /* monitSpotWallet */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "okex_monitor.spotWallet" /* monitSpotWallet */, error.toString());
+            });
+        };
+        this.unmonitSpotWallet = (event, args) => {
+            okrobot_1.apiOkexMonit.unmonitWallet(args || {})
+                .then(result => {
+                if (result.success) {
+                    const eventName = result.result;
+                    this._unregisterObserver(eventName);
+                }
+                Common_1.electronResponse(event.sender, "okex_monitor.spotWallet.unmonit" /* unmonitSpotWallet */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "okex_monitor.spotChannel.unmonit" /* unmonitSpotChannel */, error.toString());
+            });
+        };
         this.onNotification = (notification) => {
             // console.log("[BatchOrderAPI] onNotification:", notification.getName());
             EventBus_1.default.getInstance().emit(notification.getName(), notification.getBody());
@@ -131,6 +157,8 @@ class ElectronOkexMonitProxy {
         electron_1.ipcMain.on("okex_monitor.spotChannel.unmonit" /* unmonitSpotChannel */, this.unmonitSpotChannel);
         electron_1.ipcMain.on("okex_monitor.spotDepth" /* monitSpotDepth */, this.monitSpotDepth);
         electron_1.ipcMain.on("okex_monitor.spotDepth.unmonit" /* unmonitSpotDepth */, this.unmonitSpotDepth);
+        electron_1.ipcMain.on("okex_monitor.spotWallet" /* monitSpotWallet */, this.monitSpotWallet);
+        electron_1.ipcMain.on("okex_monitor.spotWallet.unmonit" /* unmonitSpotWallet */, this.unmonitSpotWallet);
     }
     onRemove() {
     }

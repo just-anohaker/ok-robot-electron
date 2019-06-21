@@ -93,6 +93,15 @@ class ElectronBatchOrderProxy {
                 Common_1.electronCatch(event.sender, "batchorder.stopDepthInfo" /* stopDepthInfo */, error.toString());
             });
         };
+        this.toBatchOrder = (event, args) => {
+            okrobot_1.apiBatchOrder.toBatchOrder(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "batchorder.toBatchOrder" /* toBatchOrder */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "batchorder.toBatchOrder" /* toBatchOrder */, error.toString());
+            });
+        };
         this.onNotification = (notification) => {
             // console.log("[BatchOrderAPI] onNotification:", notification.getName());
             EventBus_1.default.getInstance().emit(notification.getName(), notification.getBody());
@@ -108,6 +117,7 @@ class ElectronBatchOrderProxy {
         electron_1.ipcMain.on("batchorder.startDepthInfo" /* startDepthInfo */, this.startDepthInfo);
         electron_1.ipcMain.on("batchorder.stopDepthInfo" /* stopDepthInfo */, this.stopDepthInfo);
         electron_1.ipcMain.on("batchorder.getOrderData" /* getOrderData */, this.getOrderData);
+        electron_1.ipcMain.on("batchorder.toBatchOrder" /* toBatchOrder */, this.toBatchOrder);
         // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
         okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDT" /* kDepthUSDT */, this._observer);
         okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDK" /* kDepthUSDK */, this._observer);

@@ -15,6 +15,8 @@ declare class ElectronOkexMonitProxy implements IElectronProxy {
     private readonly unmonitSpotChannel;
     private readonly monitSpotDepth;
     private readonly unmonitSpotDepth;
+    private readonly monitSpotWallet;
+    private readonly unmonitSpotWallet;
     private readonly onNotification;
 }
 export default ElectronOkexMonitProxy;

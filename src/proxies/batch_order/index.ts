@@ -17,6 +17,7 @@ const enum BatchOrderChannel {
     startDepthInfo = "batchorder.startDepthInfo",
     stopDepthInfo = "batchorder.stopDepthInfo",
     getOrderData = "batchorder.getOrderData",
+    toBatchOrder = "batchorder.toBatchOrder"
 }
 
 const enum BatchOrderEvents {
@@ -41,6 +42,7 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.startDepthInfo, this.startDepthInfo);
         ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
         ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
+        ipcMain.on(BatchOrderChannel.toBatchOrder, this.toBatchOrder);
 
         // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
         Facade.getInstance().registerObserver(BatchOrderEvents.kDepthUSDT, this._observer!);
@@ -139,6 +141,16 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             })
             .catch(error => {
                 electronCatch(event.sender, BatchOrderChannel.stopDepthInfo, error.toString());
+            });
+    }
+
+    private readonly toBatchOrder = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.toBatchOrder(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.toBatchOrder, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.toBatchOrder, error.toString());
             });
     }
 
