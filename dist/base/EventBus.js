@@ -13,7 +13,6 @@ class EventBus {
         return this._eventEmitter;
     }
     set eventEmitter(val) {
-        console.log("hello world");
         this._eventEmitter = val;
     }
     emit(eventName, body) {

@@ -20,7 +20,6 @@ class EventBus {
     }
 
     set eventEmitter(val: WebContents) {
-        console.log("hello world");
         this._eventEmitter = val;
     }
 
