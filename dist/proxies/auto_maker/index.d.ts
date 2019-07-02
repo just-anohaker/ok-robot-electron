@@ -7,5 +7,6 @@ declare class ElectronAutoMakerProxy implements IElectronProxy {
     private readonly stop;
     private readonly isRunning;
     private readonly getOptionsAndAccount;
+    private readonly getOrderInfo;
 }
 export default ElectronAutoMakerProxy;

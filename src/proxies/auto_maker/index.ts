@@ -10,7 +10,8 @@ const enum AutoMakerChannel {
     start = "automaker.start",
     stop = "automaker.stop",
     isRunning = "automaker.isRunning",
-    getOptionsAndAccount = "automaker.getOptionsAndAccount"
+    getOptionsAndAccount = "automaker.getOptionsAndAccount",
+    getOrderInfo = "automaker.getOrderInfo"
 }
 
 class ElectronAutoMakerProxy implements IElectronProxy {
@@ -20,6 +21,7 @@ class ElectronAutoMakerProxy implements IElectronProxy {
         ipcMain.on(AutoMakerChannel.stop, this.stop);
         ipcMain.on(AutoMakerChannel.isRunning, this.isRunning);
         ipcMain.on(AutoMakerChannel.getOptionsAndAccount, this.getOptionsAndAccount);
+        ipcMain.on(AutoMakerChannel.getOrderInfo, this.getOrderInfo);
     }
 
     onRemove() {
@@ -73,6 +75,16 @@ class ElectronAutoMakerProxy implements IElectronProxy {
             })
             .catch(error => {
                 electronCatch(event.sender, AutoMakerChannel.getOptionsAndAccount, error.toString());
+            });
+    }
+
+    private readonly getOrderInfo = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiAutoMaker.getOrderInfo(args || {})
+            .then(result => {
+                electronResponse(event.sender, AutoMakerChannel.getOrderInfo, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, AutoMakerChannel.getOrderInfo, error.toString());
             });
     }
 }

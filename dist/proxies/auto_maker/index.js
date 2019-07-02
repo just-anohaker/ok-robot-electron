@@ -50,6 +50,15 @@ class ElectronAutoMakerProxy {
                 Common_1.electronCatch(event.sender, "automaker.getOptionsAndAccount" /* getOptionsAndAccount */, error.toString());
             });
         };
+        this.getOrderInfo = (event, args) => {
+            okrobot_1.apiAutoMaker.getOrderInfo(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "automaker.getOrderInfo" /* getOrderInfo */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "automaker.getOrderInfo" /* getOrderInfo */, error.toString());
+            });
+        };
     }
     onReigster() {
         electron_1.ipcMain.on("automaker.init" /* init */, this.init);
@@ -57,6 +66,7 @@ class ElectronAutoMakerProxy {
         electron_1.ipcMain.on("automaker.stop" /* stop */, this.stop);
         electron_1.ipcMain.on("automaker.isRunning" /* isRunning */, this.isRunning);
         electron_1.ipcMain.on("automaker.getOptionsAndAccount" /* getOptionsAndAccount */, this.getOptionsAndAccount);
+        electron_1.ipcMain.on("automaker.getOrderInfo" /* getOrderInfo */, this.getOrderInfo);
     }
     onRemove() {
     }
