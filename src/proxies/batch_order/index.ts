@@ -17,7 +17,13 @@ const enum BatchOrderChannel {
     startDepthInfo = "batchorder.startDepthInfo",
     stopDepthInfo = "batchorder.stopDepthInfo",
     getOrderData = "batchorder.getOrderData",
-    toBatchOrder = "batchorder.toBatchOrder"
+    toBatchOrder = "batchorder.toBatchOrder",
+    addWarnings = "batchorder.addWarnings",
+    removeWarnings = "batchorder.removeWarnings",
+    isWarnings = "batchorder.isWarnings",
+    startWarnings = "batchorder.startWarnings",
+    stopWarnings = "batchorder.stopWarnings",
+    listWarnings = "batchorder.listWarnings"
 }
 
 const enum BatchOrderEvents {
@@ -43,6 +49,12 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         ipcMain.on(BatchOrderChannel.stopDepthInfo, this.stopDepthInfo);
         ipcMain.on(BatchOrderChannel.getOrderData, this.getOrderData);
         ipcMain.on(BatchOrderChannel.toBatchOrder, this.toBatchOrder);
+        ipcMain.on(BatchOrderChannel.addWarnings, this.addWarnings);
+        ipcMain.on(BatchOrderChannel.removeWarnings, this.removeWarnings);
+        ipcMain.on(BatchOrderChannel.isWarnings, this.isWarnings);
+        ipcMain.on(BatchOrderChannel.startWarnings, this.startWarnings);
+        ipcMain.on(BatchOrderChannel.stopWarnings, this.stopWarnings);
+        ipcMain.on(BatchOrderChannel.listWarnings, this.listWarnings);
 
         // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
         Facade.getInstance().registerObserver(BatchOrderEvents.kDepthUSDT, this._observer!);
@@ -151,6 +163,66 @@ class ElectronBatchOrderProxy implements IElectronProxy {
             })
             .catch(error => {
                 electronCatch(event.sender, BatchOrderChannel.toBatchOrder, error.toString());
+            });
+    }
+
+    private readonly addWarnings = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.addWarnings(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.addWarnings, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.addWarnings, error.toString());
+            });
+    }
+
+    private readonly removeWarnings = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.removeWarnings(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.removeWarnings, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.removeWarnings, error.toString());
+            });
+    }
+
+    private readonly isWarnings = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.isWarnings(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.isWarnings, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.isWarnings, error.toString());
+            });
+    }
+
+    private readonly startWarnings = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.startWarnings(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.startWarnings, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.startWarnings, error.toString());
+            });
+    }
+
+    private readonly stopWarnings = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.stopWarnings(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.stopWarnings, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.stopWarnings, error.toString());
+            });
+    }
+
+    private readonly listWarnings = (event: Event, args: MaybeUndefined<MarkedMap>): void => {
+        apiBatchOrder.listWarnings(args || {})
+            .then(result => {
+                electronResponse(event.sender, BatchOrderChannel.listWarnings, result);
+            })
+            .catch(error => {
+                electronCatch(event.sender, BatchOrderChannel.listWarnings, error.toString());
             });
     }
 

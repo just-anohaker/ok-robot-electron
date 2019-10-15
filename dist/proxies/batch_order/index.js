@@ -102,6 +102,60 @@ class ElectronBatchOrderProxy {
                 Common_1.electronCatch(event.sender, "batchorder.toBatchOrder" /* toBatchOrder */, error.toString());
             });
         };
+        this.addWarnings = (event, args) => {
+            okrobot_1.apiBatchOrder.addWarnings(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "batchorder.addWarnings" /* addWarnings */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "batchorder.addWarnings" /* addWarnings */, error.toString());
+            });
+        };
+        this.removeWarnings = (event, args) => {
+            okrobot_1.apiBatchOrder.removeWarnings(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "batchorder.removeWarnings" /* removeWarnings */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "batchorder.removeWarnings" /* removeWarnings */, error.toString());
+            });
+        };
+        this.isWarnings = (event, args) => {
+            okrobot_1.apiBatchOrder.isWarnings(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "batchorder.isWarnings" /* isWarnings */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "batchorder.isWarnings" /* isWarnings */, error.toString());
+            });
+        };
+        this.startWarnings = (event, args) => {
+            okrobot_1.apiBatchOrder.startWarnings(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "batchorder.startWarnings" /* startWarnings */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "batchorder.startWarnings" /* startWarnings */, error.toString());
+            });
+        };
+        this.stopWarnings = (event, args) => {
+            okrobot_1.apiBatchOrder.stopWarnings(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "batchorder.stopWarnings" /* stopWarnings */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "batchorder.stopWarnings" /* stopWarnings */, error.toString());
+            });
+        };
+        this.listWarnings = (event, args) => {
+            okrobot_1.apiBatchOrder.listWarnings(args || {})
+                .then(result => {
+                Common_1.electronResponse(event.sender, "batchorder.listWarnings" /* listWarnings */, result);
+            })
+                .catch(error => {
+                Common_1.electronCatch(event.sender, "batchorder.listWarnings" /* listWarnings */, error.toString());
+            });
+        };
         this.onNotification = (notification) => {
             // console.log("[BatchOrderAPI] onNotification:", notification.getName());
             EventBus_1.default.getInstance().emit(notification.getName(), notification.getBody());
@@ -118,6 +172,12 @@ class ElectronBatchOrderProxy {
         electron_1.ipcMain.on("batchorder.stopDepthInfo" /* stopDepthInfo */, this.stopDepthInfo);
         electron_1.ipcMain.on("batchorder.getOrderData" /* getOrderData */, this.getOrderData);
         electron_1.ipcMain.on("batchorder.toBatchOrder" /* toBatchOrder */, this.toBatchOrder);
+        electron_1.ipcMain.on("batchorder.addWarnings" /* addWarnings */, this.addWarnings);
+        electron_1.ipcMain.on("batchorder.removeWarnings" /* removeWarnings */, this.removeWarnings);
+        electron_1.ipcMain.on("batchorder.isWarnings" /* isWarnings */, this.isWarnings);
+        electron_1.ipcMain.on("batchorder.startWarnings" /* startWarnings */, this.startWarnings);
+        electron_1.ipcMain.on("batchorder.stopWarnings" /* stopWarnings */, this.stopWarnings);
+        electron_1.ipcMain.on("batchorder.listWarnings" /* listWarnings */, this.listWarnings);
         // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
         okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDT" /* kDepthUSDT */, this._observer);
         okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDK" /* kDepthUSDK */, this._observer);

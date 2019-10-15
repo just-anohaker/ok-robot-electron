@@ -13,6 +13,12 @@ declare class ElectronBatchOrderProxy implements IElectronProxy {
     private readonly stopDepthInfo;
     private readonly getOrderData;
     private readonly toBatchOrder;
+    private readonly addWarnings;
+    private readonly removeWarnings;
+    private readonly isWarnings;
+    private readonly startWarnings;
+    private readonly stopWarnings;
+    private readonly listWarnings;
     private readonly onNotification;
 }
 export default ElectronBatchOrderProxy;
