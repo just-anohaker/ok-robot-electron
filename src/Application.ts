@@ -1,4 +1,4 @@
-import { WebContents } from "electron";
+import { WebContents, BrowserWindow } from "electron";
 import { Platform, Facade } from "okrobot";
 import { UserMediator } from "okrobot";
 import {
@@ -20,6 +20,7 @@ import ElectronBatchOrderProxy from "./proxies/batch_order";
 import ElectronTakeOrderProxy from "./proxies/take_order";
 import ElectronOkexUtilsProxy from "./proxies/okex_utils";
 import ElectronOkexMonitorProxy from "./proxies/okex_monitor";
+import ElectronUtils from "./proxies/utils";
 import EventBus from "./base/EventBus";
 
 class Application {
@@ -35,6 +36,7 @@ class Application {
 
 
     private _electronProxies: IElectronProxy[];
+    private _browserWindow?: BrowserWindow;
     private constructor() {
         this._electronProxies = [];
 
@@ -44,6 +46,14 @@ class Application {
 
     changeWebContents(newWebContents: WebContents): void {
         EventBus.getInstance().eventEmitter = newWebContents;
+    }
+
+    set mainWindow(arg: BrowserWindow) {
+        this._browserWindow = arg;
+    }
+
+    get mainWindow(): BrowserWindow {
+        return this._browserWindow!;
     }
 
     cwd(): string {
@@ -82,6 +92,7 @@ class Application {
         this._electronProxies.push(new ElectronTakeOrderProxy());
         this._electronProxies.push(new ElectronOkexUtilsProxy());
         this._electronProxies.push(new ElectronOkexMonitorProxy())
+        this._electronProxies.push(new ElectronUtils());
 
         for (const electronProxy of this._electronProxies) {
             electronProxy.onReigster();
