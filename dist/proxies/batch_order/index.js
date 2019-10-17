@@ -181,6 +181,15 @@ class ElectronBatchOrderProxy {
         // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
         okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDT" /* kDepthUSDT */, this._observer);
         okrobot_3.Facade.getInstance().registerObserver("depth:ETM-USDK" /* kDepthUSDK */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("page/candle:ETM-USDK" /* kCandleUSDK */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("page/candle:ETM-USDK" /* kCandleUSDK */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("page/ticker:ETM-USDT" /* kTickerUSDT */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("page/ticker:ETM-USDK" /* kTickerUSDK */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("page/trade:ETM-USDT" /* kTradeUSDT */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("page/trade:ETM-USDK" /* kTradeUSDK */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("warning:ETM-USDT" /* kWarningETMUSDT */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("warning:ETM-USDK" /* kWarningETMUSDK */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("warning:ETM-USDT" /* kWarningBTCUSDT */, this._observer);
     }
     onRemove() {
     }

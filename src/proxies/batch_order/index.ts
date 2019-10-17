@@ -29,7 +29,16 @@ const enum BatchOrderChannel {
 const enum BatchOrderEvents {
     depth = "depth",
     kDepthUSDT = "depth:ETM-USDT",
-    kDepthUSDK = "depth:ETM-USDK"
+    kDepthUSDK = "depth:ETM-USDK",
+    kCandleUSDT = "page/candle:ETM-USDT",
+    kCandleUSDK = "page/candle:ETM-USDK",
+    kTickerUSDT = "page/ticker:ETM-USDT",
+    kTickerUSDK = "page/ticker:ETM-USDK",
+    kTradeUSDT = "page/trade:ETM-USDT",
+    kTradeUSDK = "page/trade:ETM-USDK",
+    kWarningETMUSDT = "warning:ETM-USDT",
+    kWarningETMUSDK = "warning:ETM-USDK",
+    kWarningBTCUSDT = "warning:ETM-USDT"
 };
 
 class ElectronBatchOrderProxy implements IElectronProxy {
@@ -59,7 +68,15 @@ class ElectronBatchOrderProxy implements IElectronProxy {
         // Facade.getInstance().registerObserver(BatchOrderEvents.depth, this._observer!);
         Facade.getInstance().registerObserver(BatchOrderEvents.kDepthUSDT, this._observer!);
         Facade.getInstance().registerObserver(BatchOrderEvents.kDepthUSDK, this._observer!);
-
+        Facade.getInstance().registerObserver(BatchOrderEvents.kCandleUSDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kCandleUSDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kTickerUSDT, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kTickerUSDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kTradeUSDT, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kTradeUSDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kWarningETMUSDT, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kWarningETMUSDK, this._observer!);
+        Facade.getInstance().registerObserver(BatchOrderEvents.kWarningBTCUSDT, this._observer!);
     }
 
     onRemove() {
