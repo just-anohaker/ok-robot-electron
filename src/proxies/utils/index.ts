@@ -38,8 +38,11 @@ export class ElectronUtils implements IElectronProxy {
         dialog.showOpenDialog(
             mainWindow,
             {
-                title: "音乐文件选择",
-                properties: ["openFile"]
+                title: "预警音乐文件选择",
+                properties: ["openFile"],
+                filters: [
+                    { name: "预警音乐", extensions: ["mp3", "wav", "ogg", "flac"] }
+                ]
             },
             (filePaths: string[] | undefined) => {
                 if (filePaths === undefined || filePaths.length <= 0) {
