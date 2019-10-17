@@ -14,6 +14,7 @@ const batch_order_1 = __importDefault(require("./proxies/batch_order"));
 const take_order_1 = __importDefault(require("./proxies/take_order"));
 const okex_utils_1 = __importDefault(require("./proxies/okex_utils"));
 const okex_monitor_1 = __importDefault(require("./proxies/okex_monitor"));
+const utils_1 = __importDefault(require("./proxies/utils"));
 const EventBus_1 = __importDefault(require("./base/EventBus"));
 class Application {
     static getInstance() {
@@ -29,6 +30,12 @@ class Application {
     }
     changeWebContents(newWebContents) {
         EventBus_1.default.getInstance().eventEmitter = newWebContents;
+    }
+    set mainWindow(arg) {
+        this._browserWindow = arg;
+    }
+    get mainWindow() {
+        return this._browserWindow;
     }
     cwd() {
         return okrobot_1.Platform.getInstance().getUserDataDir();
@@ -61,6 +68,7 @@ class Application {
         this._electronProxies.push(new take_order_1.default());
         this._electronProxies.push(new okex_utils_1.default());
         this._electronProxies.push(new okex_monitor_1.default());
+        this._electronProxies.push(new utils_1.default());
         for (const electronProxy of this._electronProxies) {
             electronProxy.onReigster();
         }
