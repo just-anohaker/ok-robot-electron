@@ -38,7 +38,7 @@ const enum BatchOrderEvents {
     kTradeUSDK = "page/trade:ETM-USDK",
     kWarningETMUSDT = "warning:ETM-USDT",
     kWarningETMUSDK = "warning:ETM-USDK",
-    kWarningBTCUSDT = "warning:ETM-USDT"
+    kWarningBTCUSDT = "warning:BTC-USDT"
 };
 
 class ElectronBatchOrderProxy implements IElectronProxy {

@@ -189,7 +189,7 @@ class ElectronBatchOrderProxy {
         okrobot_3.Facade.getInstance().registerObserver("page/trade:ETM-USDK" /* kTradeUSDK */, this._observer);
         okrobot_3.Facade.getInstance().registerObserver("warning:ETM-USDT" /* kWarningETMUSDT */, this._observer);
         okrobot_3.Facade.getInstance().registerObserver("warning:ETM-USDK" /* kWarningETMUSDK */, this._observer);
-        okrobot_3.Facade.getInstance().registerObserver("warning:ETM-USDT" /* kWarningBTCUSDT */, this._observer);
+        okrobot_3.Facade.getInstance().registerObserver("warning:BTC-USDT" /* kWarningBTCUSDT */, this._observer);
     }
     onRemove() {
     }
