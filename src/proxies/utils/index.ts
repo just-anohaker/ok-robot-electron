@@ -41,7 +41,8 @@ export class ElectronUtils implements IElectronProxy {
                 title: "预警音乐文件选择",
                 properties: ["openFile"],
                 filters: [
-                    { name: "预警音乐", extensions: ["mp3", "wav", "ogg", "flac"] }
+                    { name: "Mp3音乐", extensions: ["mp3"] },
+                    { name: "Ogg音乐", extensions: ["ogg"] }
                 ]
             },
             (filePaths: string[] | undefined) => {
